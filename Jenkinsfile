@@ -82,7 +82,7 @@ pipeline {
                     echo 'Deploying to Amazon ECS...'
                     withCredentials([[
                         $class: 'AmazonWebServicesCredentialsBinding',
-                        credentialsId: 'mlops-jenkins-dockerhub-token'
+                        credentialsId: 'aws-credentials'
                     ]]) {
                         sh '''
                             aws ecs update-service \
