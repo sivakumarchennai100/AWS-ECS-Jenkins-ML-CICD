@@ -11,7 +11,7 @@ pipeline {
                 // Clone Repository
                 script {
                     echo 'Cloning GitHub Repo...'
-                    checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'mlops-aws-ecs-cicd', url: 'https://github.com/shj37/AWS-ECS-Jenkins-ML-CICD.git']])
+                    checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'aws-credentials', url: 'https://github.com/shj37/AWS-ECS-Jenkins-ML-CICD.git']])
                 }
             }
         }
@@ -81,7 +81,7 @@ pipeline {
                     echo 'Deploying to production...'
                     withCredentials([[
                         $class: 'AmazonWebServicesCredentialsBinding',
-                        credentialsId: 'mlops-awscredential'
+                        credentialsId: 'aws-credentials'
                     ]]) {
                         sh "aws ecs update-service --cluster mlops-jenkins-ecs-1 --service mlops-jenkins-01-task-definition-service-radwjwae --force-new-deployment --region us-east-2"
                     }
