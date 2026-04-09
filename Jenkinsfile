@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKERHUB_CREDENTIAL_ID = 'mlops-jenkins-dockerhub-token'
         DOCKERHUB_REGISTRY = 'https://registry.hub.docker.com'
-        DOCKERHUB_REPOSITORY = 'juianba/mlops-jenkins-01'
+        DOCKERHUB_REPOSITORY = 'skmohan7984/mlops-jenkins-01'
     }
 
     stages {
@@ -82,14 +82,14 @@ pipeline {
                     echo 'Deploying to Amazon ECS...'
                     withCredentials([[
                         $class: 'AmazonWebServicesCredentialsBinding',
-                        credentialsId: 'mlops-awscredential'
+                        credentialsId: 'mlops-jenkins-dockerhub-token'
                     ]]) {
                         sh '''
                             aws ecs update-service \
                               --cluster mlops-jenkins-ecs-1 \
                               --service mlops-jenkins-01-task-definition-service-radwjwae \
                               --force-new-deployment \
-                              --region us-east-2
+                              --region ap-south-1
                         '''
                     }
                 }
